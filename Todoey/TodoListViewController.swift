@@ -11,7 +11,7 @@ import UIKit
 class TodoListViewController: UITableViewController {
     
     //MARK:- 属性
-    let itemArray = ["Find Mike","Buy Eggos","Destory Demogorgon"]
+    var itemArray = ["Find Mike","Buy Eggos","Destory Demogorgon"]
     
     
     //MARK:- 系统回调
@@ -52,4 +52,37 @@ class TodoListViewController: UITableViewController {
         //正常状态下 选中tableView时选中的行 是灰色的 。
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    //MARK:- Add New Items
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        
+        let alert =  UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        let leftAction =  UIAlertAction(title: "Add Item", style: UIAlertActionStyle.default) { (action) in
+            // what will happen once the user clicks the Add Item button on our UIAlert
+            if let item = textField.text {
+                self.itemArray.append(item)
+                self.tableView.reloadData()
+            }
+        }
+        
+        let rightAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive) { (result) in
+            // what will happen once the user clicks the Add Item button on our UIAlert
+            print("Cancel")
+        }
+        
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Creat new item"
+            textField = alertTextField
+        }
+        alert.addAction(leftAction)
+        alert.addAction(rightAction)
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
 }
